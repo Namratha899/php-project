@@ -6,14 +6,14 @@ pipeline {
     stages{
         stage('git cloned'){
             steps{
-                git url:'https://github.com/Namratha899/php-project/'
+                git url:'https://github.com/Namratha899/php-project/' branch: "master"
               
             }
         }
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t Namratha899/akshatnewimg6july:v1 .'
+                    sh 'docker build -t namratha899/akshatnewimg6july:v1 .'
                     sh 'docker images'
                 }
             }
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push Namratha899/akshatnewimg6july:v1'
+                    sh 'docker push namratha899/akshatnewimg6july:v1'
                 }
             }
         }
